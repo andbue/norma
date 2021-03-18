@@ -16,7 +16,7 @@ set(NORMA_PYTHON_LIBRARIES norma ${PYTHON_LIBRARIES} ${Boost_PYTHON_LIBRARY})
 target_link_libraries(norma-python LINK_PUBLIC ${NORMA_PYTHON_LIBRARIES})
 
 ### let python tell us what the appropriate directory for site packages is
-execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(prefix='${DESTINATION}')"
+execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(prefix='${DESTINATION}'))"
                         OUTPUT_VARIABLE PYTHON_SITE_PACKAGES OUTPUT_STRIP_TRAILING_WHITESPACE)
 set(NORMA_PYTHON_INSTALL_DIR ${PYTHON_SITE_PACKAGES}/norma)
 install(TARGETS norma-python DESTINATION ${NORMA_PYTHON_INSTALL_DIR})
