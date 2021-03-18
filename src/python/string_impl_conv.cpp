@@ -57,13 +57,13 @@ void ICUString_from_python_str::construct(PyObject* obj_ptr,
     // Extract the character data from the python string
     if (PyUnicode_Check(obj_ptr)) {
         // UTF-8 encoding as an intermediate step for PyUnicode -> ICU
-        const char* value = PyString_AsString(PyUnicode_AsUTF8String(obj_ptr));
+        const char* value = PyBytes_AsString(PyUnicode_AsUTF8String(obj_ptr));
         assert(value);
         new (storage) UnicodeString(UnicodeString::fromUTF8(value));
     } else {
         // we cannot know the proper encoding of byte strings in
         // Python 2.x, so we guess UTF-8
-        const char* value = PyString_AsString(obj_ptr);
+        const char* value = PyBytes_AsString(obj_ptr);
         assert(value);
         new (storage) UnicodeString(UnicodeString::fromUTF8(value));
     }
@@ -100,7 +100,7 @@ void STDString_from_python_unicode::construct(PyObject* obj_ptr,
     void* storage = reinterpret_cast<py_storage*>(data)->storage.bytes;
 
     // Extract the character data from the python string
-    const char* value = PyString_AsString(PyUnicode_AsLatin1String(obj_ptr));
+    const char* value = PyBytes_AsString(PyUnicode_AsLatin1String(obj_ptr));
     assert(value);
     new (storage) string_impl(value);
 

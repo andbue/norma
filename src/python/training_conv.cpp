@@ -45,8 +45,8 @@ void* TrainingData_from_python_list::convertible(PyObject* obj_ptr) {
             // each tuple must consist of exactly two strings
             PyObject* source = PyTuple_GetItem(member, 0);
             PyObject* target = PyTuple_GetItem(member, 1);
-            if (!(PyString_Check(source) || PyUnicode_Check(source))
-                || !(PyString_Check(target) || PyUnicode_Check(target)))
+            if (!(PyUnicode_Check(source) || PyUnicode_Check(source))
+                || !(PyUnicode_Check(target) || PyUnicode_Check(target)))
                 return 0;
         } else {
             return 0;

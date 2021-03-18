@@ -94,7 +94,7 @@ void set_path(const char* path_par) {
     // deprecation warning, which i suspect is the fault of python
     char pn[5] = "path";
     sys_path = PySys_GetObject(pn);
-    path = PyString_FromString(path_par);
+    path = PyUnicode_FromString(path_par);
     PyList_Append(sys_path, path);
     Py_DECREF(path);
 }
@@ -108,7 +108,7 @@ void External::init() {
         set_path(_params->at(_name + ".path").c_str());
 
     PyObject *sname =
-        PyString_FromString(_params->at(_name + ".script").c_str());
+        PyUnicode_FromString(_params->at(_name + ".script").c_str());
     script = PyImport_Import(sname);
     Py_DECREF(sname);
     if (script == nullptr)
@@ -141,7 +141,7 @@ Result External::do_normalize(const string_impl& word) const {
     temp_state = PyThreadState_Swap(my_threadstate);
     const char* word_cstr = to_cstr(word);
     PyObject *pargs = PyTuple_New(1);
-    PyTuple_SetItem(pargs, 0, PyString_FromString(word_cstr));
+    PyTuple_SetItem(pargs, 0, PyUnicode_FromString(word_cstr));
 
     PyObject *result = PyObject_CallObject(normalize_fun, pargs);
     if (result == nullptr) {
@@ -150,7 +150,7 @@ Result External::do_normalize(const string_impl& word) const {
         Py_DECREF(result);
         throw std::runtime_error("Python error");
     }
-    string_impl cword = PyString_AsString(PyTuple_GetItem(result, 0));
+    string_impl cword = PyBytes_AsString(PyTuple_GetItem(result, 0));
     double score = PyFloat_AsDouble(PyTuple_GetItem(result, 1));
 
     Py_DECREF(pargs);
@@ -167,8 +167,8 @@ ResultSet External::do_normalize(const string_impl& word, unsigned int n)
     temp_state = PyThreadState_Swap(my_threadstate);
     const char* word_cstr = to_cstr(word);
     PyObject *pargs = PyTuple_New(2);
-    PyTuple_SetItem(pargs, 0, PyString_FromString(word_cstr));
-    PyTuple_SetItem(pargs, 1, PyInt_FromLong(n));
+    PyTuple_SetItem(pargs, 0, PyUnicode_FromString(word_cstr));
+    PyTuple_SetItem(pargs, 1, PyLong_FromLong(n));
 
     PyObject* result = PyObject_CallObject(normalize_nbest_fun, pargs);
     if (result == nullptr) {
@@ -184,7 +184,7 @@ ResultSet External::do_normalize(const string_impl& word, unsigned int n)
     auto result_size = PyList_Size(result);
     for (int i = 0; i < result_size; ++i) {
         PyObject* entry = PyList_GetItem(result, i);
-        cword = PyString_AsString(PyTuple_GetItem(entry, 0));
+        cword = PyBytes_AsString(PyTuple_GetItem(entry, 0));
         score = PyFloat_AsDouble(PyTuple_GetItem(entry, 1));
         resultset.push_back(make_result(cword, score));
         Py_DECREF(entry);

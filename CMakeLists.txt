@@ -63,8 +63,9 @@ endif()
 # }}}
 ########## python bindings {{{
 if(WITH_PYTHON)
-    find_package(PythonLibs 2.7 REQUIRED)
-    find_package(PythonInterp 2.7 REQUIRED)
+    #find_package(PythonLibs 3.9 REQUIRED)
+    #find_package(PythonInterp 3.9 REQUIRED)
+    find_package(Python COMPONENTS Interpreter Development)
     include_directories(${PYTHON_INCLUDE_DIRS})
 endif()
 # }}}

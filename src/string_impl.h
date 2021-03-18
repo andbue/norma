@@ -27,8 +27,9 @@
 #ifdef USE_ICU_STRING
 #include<istream>
 #include<ostream>
-#include<unicode/unistr.h> // NOLINT[build/include_order]
-#include<unicode/uchar.h>  // NOLINT[build/include_order]
+class UnicodeString;
+//#include<unicode/unistr.h> // NOLINT[build/include_order]
+//#include<unicode/uchar.h>  // NOLINT[build/include_order]
 
 /// Wrapper class for UnicodeString.
 /// this class is necessary because we assume that non-ICU

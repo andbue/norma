@@ -45,12 +45,12 @@ void* Result_from_python_tuple::convertible(PyObject* obj_ptr) {
         return 0;
     PyObject* result_word = PyTuple_GetItem(obj_ptr, 0);
     PyObject* result_score = PyTuple_GetItem(obj_ptr, 1);
-    if (!(PyString_Check(result_word) || PyUnicode_Check(result_word))
-        || !(PyFloat_Check(result_score) || PyInt_Check(result_score)))
+    if (!(PyUnicode_Check(result_word) || PyUnicode_Check(result_word))
+        || !(PyFloat_Check(result_score) || PyLong_Check(result_score)))
         return 0;
     if (size == 3) {
         PyObject* result_origin = PyTuple_GetItem(obj_ptr, 2);
-        if (!(PyString_Check(result_origin) || PyUnicode_Check(result_origin)))
+        if (!(PyUnicode_Check(result_origin) || PyUnicode_Check(result_origin)))
             return 0;
     }
     return obj_ptr;
@@ -71,7 +71,7 @@ void Result_from_python_tuple::construct(PyObject* obj_ptr,
     if (PyFloat_Check(ptr_score))
         result_score = PyFloat_AsDouble(ptr_score);
     else
-        result_score = PyInt_AsLong(ptr_score);
+        result_score = PyLong_AsLong(ptr_score);
     // .origin
     Result* result = new (storage) Result(result_word, result_score);
     if (PyTuple_Size(obj_ptr) > 2) {
