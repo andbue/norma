@@ -27,16 +27,17 @@
 #ifdef USE_ICU_STRING
 #include<istream>
 #include<ostream>
-class UnicodeString;
-//#include<unicode/unistr.h> // NOLINT[build/include_order]
-//#include<unicode/uchar.h>  // NOLINT[build/include_order]
+//class UnicodeString;
+#include<unicode/unistr.h> // NOLINT[build/include_order]
+#include<unicode/uchar.h>  // NOLINT[build/include_order]
+
 
 /// Wrapper class for UnicodeString.
 /// this class is necessary because we assume that non-ICU
 /// strings are always UTF encoded already, which is not an
 /// assumption ICU shares, so we have to explicitly call
 /// UnicodeString::fromUTF8 a few times.
-class unicode_string_impl : public UnicodeString {
+class unicode_string_impl : public icu::UnicodeString {
  public:
      unicode_string_impl() = default;
      unicode_string_impl(const char* that)  // NOLINT[runtime/explicit]
@@ -52,7 +53,9 @@ class unicode_string_impl : public UnicodeString {
         : UnicodeString(that) {}
      unicode_string_impl(const UnicodeString& that)  // NOLINT[runtime/explicit]
         : UnicodeString(that) {}
-};
+}; 
+
+//typedef icu::UnicodeString string_impl;
 
 typedef unicode_string_impl string_impl;
 typedef UChar32 char_impl;

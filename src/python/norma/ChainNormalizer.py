@@ -19,7 +19,7 @@
 ################################################################################
 
 from operator import attrgetter
-from norma import Result
+from .norma import Result
 
 class ChainNormalizer(list):
     """Normalizer that represents a chain of other normalizers.

@@ -21,11 +21,11 @@
 # This file defines global functions that create and initialize
 # normalizer objects at the same time
 
-import norma
-import mapper as MapperLib
-import wld as WLDLib
-import rulebased as RulebasedLib
-import ChainNormalizer
+# import .norma
+import norma.mapper as MapperLib
+import norma.wld as WLDLib
+import norma.rulebased as RulebasedLib
+from norma.ChainNormalizer import ChainNormalizer
 
 class Mapper(MapperLib.MapperNormalizer):
     """Normalizer that uses a dictionary of word forms.
@@ -110,4 +110,4 @@ class WLD(WLDLib.WLDNormalizer):
         self.init(*args)
 
 # Aliases for normalizers implemented in Python:
-Chain = ChainNormalizer.ChainNormalizer
+Chain = ChainNormalizer

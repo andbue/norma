@@ -18,7 +18,7 @@
 # with Norma.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-from norma import Lexicon as CppLexicon
+from .norma import Lexicon as CppLexicon
 
 # Extends the C++ bindings for Lexicon by providing some convenience
 # functions that are much simpler to implement on the Python side

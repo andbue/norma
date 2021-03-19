@@ -21,7 +21,7 @@
 
 from __future__ import print_function, division, absolute_import, unicode_literals
 import os, sys
-import ConfigParser
+from configparser import ConfigParser
 from norma.LexiconWrapper import Lexicon
 import norma.NormalizerWrapper as Normalizer
 
@@ -33,14 +33,21 @@ class FakeSecHead(object):
         self.fp = fp
         self.sechead = '[General]\n'
 
-    def readline(self):
+    def __iter__(self):
+        return self
+
+    def __next__(self):
         if self.sechead:
             try:
                 return self.sechead
             finally:
                 self.sechead = None
         else:
-            return self.fp.readline()
+            l = self.fp.readline()
+            if l:
+                return l
+            else:
+                raise StopIteration
 
 class NormaCfgParser(object):
     cfgpath = "."
@@ -74,7 +81,7 @@ class NormaCfgParser(object):
                           self.interpret_path(self.lexinfo['symfile']))
         normalizers = []
         for data in self.norminfo:
-            name = data[0].encode("utf8")
+            name = data[0]
             if name == 'Mapper' and 'mapfile' in data[1]:
                 mapfile = self.interpret_path(data[1]['mapfile'])
                 normalizer = Normalizer.Mapper(mapfile, lexicon)
@@ -122,7 +129,7 @@ class NormaCfgParser(object):
 
         try:
             normalizer_info = self._parse_config(config)
-        except ConfigParser.Error as detail:
+        except KeyError as detail:
             raise InitError("While processing configuration file '%s':%s" % (config, detail))
             return False
         else:
@@ -134,7 +141,7 @@ class NormaCfgParser(object):
         """Parse a configuration file and set variables accordingly.
         Called from load_config(), where all parameter checking and
         error handling should be done."""
-        cfg = ConfigParser.SafeConfigParser()
+        cfg = ConfigParser()
         with open(config, 'r') as cfile:
             cfg.readfp(FakeSecHead(cfile))
 

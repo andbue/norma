@@ -81,6 +81,15 @@ messages), as well as API documentation that is generated via `make doc` (requir
 * To make Python bindings/embeddings (default: disabled), set
     `-DWITH_PYTHON=TRUE`
 
+#### Building on Arch Linux with python3.9:
+```
+mkdir build
+cd build
+cmake ../ -DSTRING_IMPL=ICU  -DWITH_PYTHON=TRUE -DPYTHON_INCLUDE_DIRS=/usr/include/python3.9 -DPYTHON_LIBRARIES=/usr/lib
+make
+```
+
+
 #### Other platforms
 
 * Norma was developed on Linux and will not work on non-Unix platforms.

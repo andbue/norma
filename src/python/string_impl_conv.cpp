@@ -43,7 +43,7 @@ PyObject* ICUString_to_python_str::convert(string_impl const& s) {
 
 /// determine if obj_ptr can be converted to an ICU string
 void* ICUString_from_python_str::convertible(PyObject* obj_ptr) {
-    if (!PyString_Check(obj_ptr)
+    if (!PyUnicode_Check(obj_ptr)
         && !PyUnicode_Check(obj_ptr)) return 0;
     return obj_ptr;
 }
@@ -59,13 +59,13 @@ void ICUString_from_python_str::construct(PyObject* obj_ptr,
         // UTF-8 encoding as an intermediate step for PyUnicode -> ICU
         const char* value = PyBytes_AsString(PyUnicode_AsUTF8String(obj_ptr));
         assert(value);
-        new (storage) UnicodeString(UnicodeString::fromUTF8(value));
+        new (storage) icu::UnicodeString(icu::UnicodeString::fromUTF8(value));
     } else {
         // we cannot know the proper encoding of byte strings in
         // Python 2.x, so we guess UTF-8
         const char* value = PyBytes_AsString(obj_ptr);
         assert(value);
-        new (storage) UnicodeString(UnicodeString::fromUTF8(value));
+        new (storage) icu::UnicodeString(icu::UnicodeString::fromUTF8(value));
     }
 
     // Stash the memory chunk pointer for later use by boost.python

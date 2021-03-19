@@ -22,6 +22,7 @@
 #include<istream>
 #include<ostream>
 
+
 const char* to_cstr(const string_impl& str) {
     // one problem with this function:
     // it returns a char ptr, so if i call it

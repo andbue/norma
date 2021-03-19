@@ -1,4 +1,4 @@
-find_package(PythonInterp 2.7 REQUIRED)
+find_package(Python COMPONENTS Interpreter)
 configure_file(py-norma.py.in py-norma.py)
 configure_file(test_lexicon.py test_lexicon.py COPYONLY)
 configure_file(test_lexicon_icu.py test_lexicon_icu.py COPYONLY)

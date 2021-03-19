@@ -30,7 +30,7 @@ namespace Norma {
 namespace Python {
 
 BOOST_PYTHON_MODULE(norma) {
-    register_exception_translators();
+    //register_exception_translators();
     register_string_impl_converters();
     register_result_converters();
     register_training_converters();
