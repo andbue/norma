@@ -19,6 +19,7 @@
 // This will register converters with Boost::Python that convert
 // TrainingPair and TrainingData to and from native Python objects.
 // ----------------------------------------------------------------------------
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS
 #include"training_conv.h"
 #include<boost/python.hpp>  //NOLINT[build/include_order]
 #include"string_impl.h"

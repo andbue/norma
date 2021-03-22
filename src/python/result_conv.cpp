@@ -19,6 +19,7 @@
 // This will register converters with Boost::Python that convert
 // Result and ResultSet into native Python tuples or lists of tuples.
 // ----------------------------------------------------------------------------
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS
 #include"result_conv.h"
 #include<queue>
 #include<sstream>

@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) {
                              "or --extract/-x.");
         }
     }
-    catch(cfg::error e) {
+    catch(cfg::error &e) {
         std::cerr << "Error parsing command-line options: "
                   << e.what() << std::endl;
         return 1;
@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
             lex.set_symfile(m["labels"].as<std::string>());
             try {
                 lex.init();
-            } catch(Norma::Normalizer::init_error e) {}  // this is expected
+            } catch(Norma::Normalizer::init_error &e) {}  // this is expected
             std::ifstream file;
             file.open(m["words"].as<std::string>(), std::ios::in);
             // read words
@@ -143,13 +143,13 @@ int main(int argc, char* argv[]) {
         return_code = 1;
         try {
             throw;
-        } catch(std::bad_function_call e) {
+        } catch(std::bad_function_call &e) {
             std::cerr << "Bad function call: " << e.what() << std::endl;
-        } catch(std::runtime_error e) {
+        } catch(std::runtime_error &e) {
             std::cerr << "Runtime error: " << e.what() << std::endl;
-        } catch(std::out_of_range e) {
+        } catch(std::out_of_range &e) {
             std::cerr << "Out of range: " << e.what() << std::endl;
-        } catch(std::logic_error e) {
+        } catch(std::logic_error &e) {
             std::cerr << "Logic error: " << e.what() << std::endl;
         } catch(...) {
             std::cerr << "Unknown error! Something horrible happened."

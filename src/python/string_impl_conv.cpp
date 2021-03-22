@@ -19,6 +19,7 @@
 // This will register converters with Boost::Python that convert between
 // ICU strings and python strings, and from PyUnicode strings to std::string.
 // ----------------------------------------------------------------------------
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS
 #include"string_impl_conv.h"
 #include<string>
 #include<boost/python.hpp>  //NOLINT[build/include_order]

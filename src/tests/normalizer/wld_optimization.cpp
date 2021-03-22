@@ -143,7 +143,7 @@ int main(int argc, char* argv[]) {
     try {
         cfg::store(cfg::parse_command_line(argc, argv, desc_all), m);
     }
-    catch(cfg::error e) {
+    catch(cfg::error &e) {
         std::cerr << "Error parsing command-line options: "
                   << e.what() << std::endl;
         return 1;

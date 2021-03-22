@@ -32,20 +32,19 @@ namespace External {
 
 External::External() : python_mutex(new std::mutex()) {
     Py_Initialize();
-    PyEval_InitThreads();
     main_threadstate = PyThreadState_Get();
     interpreter_state = main_threadstate->interp;
     // i have honestly no idea what the threadstate does, but the internet
     // claims i need it and i need to swap it out before i use the interpreter.
     my_threadstate = PyThreadState_New(interpreter_state);
     // PyEval_InitThreads implicitly acquires lock
-    PyEval_ReleaseLock();
+    PyEval_SaveThread();
 }
 
 External::~External() {
     if (_initialized)
         tear_down();
-    PyEval_ReleaseLock();
+    PyEval_SaveThread();
     PyThreadState_Clear(my_threadstate);
     PyThreadState_Delete(my_threadstate);
     Py_Finalize();
@@ -102,7 +101,7 @@ void set_path(const char* path_par) {
 
 void External::init() {
     std::lock_guard<std::mutex> guard(*python_mutex);
-    PyEval_AcquireLock();
+    PyEval_RestoreThread(my_threadstate);
     temp_state = PyThreadState_Swap(my_threadstate);
     if (_params->count(_name + ".path") != 0)
         set_path(_params->at(_name + ".path").c_str());
@@ -131,13 +130,13 @@ void External::init() {
     PyObject_CallObject(setup_fun, pargs);
     Py_DECREF(pargs);
     my_threadstate = PyThreadState_Swap(temp_state);
-    PyEval_ReleaseLock();
+    PyEval_SaveThread();
     _initialized = true;
 }
 
 Result External::do_normalize(const string_impl& word) const {
     std::lock_guard<std::mutex> guard(*python_mutex);
-    PyEval_AcquireLock();
+    PyEval_RestoreThread(my_threadstate);
     temp_state = PyThreadState_Swap(my_threadstate);
     const char* word_cstr = to_cstr(word);
     PyObject *pargs = PyTuple_New(1);
@@ -156,14 +155,14 @@ Result External::do_normalize(const string_impl& word) const {
     Py_DECREF(pargs);
     Py_DECREF(result);
     my_threadstate = PyThreadState_Swap(temp_state);
-    PyEval_ReleaseLock();
+    PyEval_SaveThread();
     return make_result(cword, score);
 }
 
 ResultSet External::do_normalize(const string_impl& word, unsigned int n)
                     const {
     std::lock_guard<std::mutex> guard(*python_mutex);
-    PyEval_AcquireLock();
+    PyEval_RestoreThread(my_threadstate);
     temp_state = PyThreadState_Swap(my_threadstate);
     const char* word_cstr = to_cstr(word);
     PyObject *pargs = PyTuple_New(2);
@@ -192,31 +191,31 @@ ResultSet External::do_normalize(const string_impl& word, unsigned int n)
     Py_DECREF(pargs);
     Py_DECREF(result);
     my_threadstate = PyThreadState_Swap(temp_state);
-    PyEval_ReleaseLock();
+    PyEval_SaveThread();
     return resultset;
 }
 
 bool External::do_train(TrainingData* data) {
     std::lock_guard<std::mutex> guard(*python_mutex);
-    PyEval_AcquireLock();
+    PyEval_RestoreThread(my_threadstate);
     temp_state = PyThreadState_Swap(my_threadstate);
     PyObject* pargs = PyTuple_New(0);
     PyObject_CallObject(train_fun, pargs);
     Py_DECREF(pargs);
     my_threadstate = PyThreadState_Swap(temp_state);
-    PyEval_ReleaseLock();
+    PyEval_SaveThread();
     return true;
 }
 
 void External::do_save_params() {
     std::lock_guard<std::mutex> guard(*python_mutex);
-    PyEval_AcquireLock();
+    PyEval_RestoreThread(my_threadstate);
     temp_state = PyThreadState_Swap(my_threadstate);
     PyObject* pargs = PyTuple_New(0);
     PyObject_CallObject(save_fun, pargs);
     Py_DECREF(pargs);
     my_threadstate = PyThreadState_Swap(temp_state);
-    PyEval_ReleaseLock();
+    PyEval_SaveThread();
 }
 
 }  // namespace External

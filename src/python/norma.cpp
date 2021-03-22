@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License along
  * with Norma.  If not, see <http://www.gnu.org/licenses/>.
  */
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS
 #include<vector>
 #include<boost/python.hpp>  //NOLINT[build/include_order]
 #include<boost/python/suite/indexing/vector_indexing_suite.hpp>  //NOLINT[build/include_order]

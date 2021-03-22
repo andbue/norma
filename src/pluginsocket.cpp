@@ -48,13 +48,13 @@ PluginSocket::PluginSocket(const string& chain_definition,
     _lex = new Normalizer::Lexicon();
     try {
         _lex->init(params);
-    } catch(Normalizer::init_error e) {
+    } catch(Normalizer::init_error &e) {
         std::cerr << "*** WARNING: while initializing Lexicon: "
                   << e.what() << std::endl;
     }
     try {
         init_chain();
-    } catch(Normalizer::init_error e) {
+    } catch(Normalizer::init_error &e) {
         std::cerr << "*** WARNING: while initializing a normalizer: "
                   << e.what() << std::endl;
     }
@@ -102,11 +102,11 @@ void PluginSocket::init_chain() {
         try {
             normalizer = create_plugin(lib_name, alias);
             normalizer->init(config_vars, _lex);
-        } catch (Normalizer::init_error e) {
+        } catch (Normalizer::init_error &e) {
             std::cerr << "*** WARNING: while initializing normalizer "
                       << lib_name << ": "
                       << e.what() << std::endl;
-        } catch (std::runtime_error e) {
+        } catch (std::runtime_error &e) {
             std::cerr << "*** ERROR: while loading plugin "
                       << lib_name << ": "
                       << e.what() << std::endl;
@@ -191,7 +191,7 @@ void PluginSocket::save_params() {
     for (auto n : *this) {
         try {
             n->save_params();
-        } catch(std::runtime_error e) {
+        } catch(std::runtime_error &e) {
             std::cerr << "*** ERROR: while saving params for normalizer"
                       << n->name() << ":" << std::endl
                       << e.what() << std::endl;
@@ -199,7 +199,7 @@ void PluginSocket::save_params() {
     }
     try {
         _lex->save_params();
-    } catch (std::runtime_error e) {
+    } catch (std::runtime_error &e) {
         std::cerr << "*** ERROR: while saving params for Lexicon:"
                   << std::endl << e.what() << std::endl;
     }

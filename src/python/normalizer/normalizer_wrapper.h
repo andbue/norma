@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License along
  * with Norma.  If not, see <http://www.gnu.org/licenses/>.
  */
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS
 #ifndef NORMA_PYTHON_NORMALIZER_WRAPPER_H_
 #define NORMA_PYTHON_NORMALIZER_WRAPPER_H_
 #include<string>

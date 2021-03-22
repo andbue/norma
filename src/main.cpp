@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
     try {
         cfg::store(cfg::parse_command_line(argc, argv, desc_all), m);
     }
-    catch(cfg::error e) {
+    catch(cfg::error &e) {
         std::cerr << "Error parsing command-line options: "
                   << e.what() << std::endl;
         return 1;
@@ -154,13 +154,13 @@ int main(int argc, char* argv[]) {
         return_code = 1;
         try {
             throw;
-        } catch(std::bad_function_call e) {
+        } catch(std::bad_function_call &e) {
             std::cerr << "Bad function call: " << e.what() << std::endl;
-        } catch(std::runtime_error e) {
+        } catch(std::runtime_error &e) {
             std::cerr << "Runtime error: " << e.what() << std::endl;
-        } catch(std::out_of_range e) {
+        } catch(std::out_of_range &e) {
             std::cerr << "Out of range: " << e.what() << std::endl;
-        } catch(std::logic_error e) {
+        } catch(std::logic_error &e) {
             std::cerr << "Logic error: " << e.what() << std::endl;
         } catch(...) {
             std::cerr << "Unknown error! Something horrible happened."

@@ -277,7 +277,7 @@ struct WLDFixture {
         lex = new Lexicon();
         try {
             lex->init(params);
-        } catch(Norma::Normalizer::init_error e) {}
+        } catch(Norma::Normalizer::init_error &e) {}
         lex->add("an");
         lex->add("ja");
         lex->add("in");

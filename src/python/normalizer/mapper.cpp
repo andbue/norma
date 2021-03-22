@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License along
  * with Norma.  If not, see <http://www.gnu.org/licenses/>.
  */
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS
 #include"normalizer/mapper.h"
 #include"python/normalizer/normalizer_wrapper.h"
 
