@@ -21,7 +21,6 @@
 #include"string_impl_conv.h"
 #include"result_conv.h"
 #include"training_conv.h"
-#include"exception_wrapper.h"
 #include"lexicon_wrapper.h"
 
 namespace bp = boost::python;

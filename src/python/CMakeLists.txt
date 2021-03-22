@@ -4,8 +4,7 @@ find_package(Boost 1.50 COMPONENTS python REQUIRED)
 
 add_library(norma-python MODULE
             string_impl_conv.cpp result_conv.cpp training_conv.cpp
-            exception_wrapper.cpp lexicon_wrapper.cpp
-            norma.cpp)
+            lexicon_wrapper.cpp norma.cpp)
 ### "The name used in BOOST_PYTHON_MODULE must match the name of
 ### the .so library you generate and import into python."
 ### --see <http://stackoverflow.com/questions/8400244/boost-python-import-error-module-does-not-define-init-function>
