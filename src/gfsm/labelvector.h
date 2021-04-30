@@ -15,10 +15,15 @@
  * You should have received a copy of the GNU Lesser General Public License along
  * with Norma.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #ifndef GFSM_LABELVECTOR_H_
 #define GFSM_LABELVECTOR_H_
 #include<initializer_list>
-#include"gfsmlibs.h"
+
+#include<gfsm.h>
+#include<gfsmxl.h>
+
+// #include"gfsmlibs.h"
 
 namespace Gfsm {
 

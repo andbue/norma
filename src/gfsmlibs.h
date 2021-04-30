@@ -17,8 +17,12 @@
  */
 #ifndef GFSM_LIBRARIES_H_
 #define GFSM_LIBRARIES_H_
+#ifdef __cplusplus
 extern "C" {
+#endif
 #include<gfsm.h>
 #include<gfsmxl.h>
+#ifdef __cplusplus
 }
+#endif
 #endif
