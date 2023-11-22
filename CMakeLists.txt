@@ -45,7 +45,7 @@ include_directories(${LIBGFSM_INCLUDE_DIRS})
 # }}}
 ########## string implementation {{{
 if (STRING_IMPL STREQUAL "ICU")
-    find_package(ICU 49)
+	find_package(ICU 48 COMPONENTS uc data i18n REQUIRED)
     if (NOT ICU_FOUND)
         set(STRING_IMPL "STD")
         message(SEND_ERROR "ICU Implementation NOT found - defaulting to use std::string")
